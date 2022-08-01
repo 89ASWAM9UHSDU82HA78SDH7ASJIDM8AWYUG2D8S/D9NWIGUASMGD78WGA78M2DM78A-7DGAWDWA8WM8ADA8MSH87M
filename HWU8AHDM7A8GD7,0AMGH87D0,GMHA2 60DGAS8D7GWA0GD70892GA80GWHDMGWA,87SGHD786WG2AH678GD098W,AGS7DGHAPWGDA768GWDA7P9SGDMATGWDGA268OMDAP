@@ -811,6 +811,9 @@ end
     end
 )
 
+getgenv().negativeamount = -5
+getgenv().positiveamount = 5
+
 local BulletTracers = false
 
 getgenv().flightzenable = false
@@ -867,11 +870,11 @@ local section5 = tab:section({name = "Aimlock",side = "left",size = 278})
 local section6 = tab:section({name = "Mouse Aimlock",side = "right",size = 165})
 
 local section7 = tab2:section({name = "Gun Grip",side = "right",size = 120})
-local section8 = tab2:section({name = "Anti Aim",side = "left",size = 375})
+local section8 = tab2:section({name = "Anti Aim",side = "left",size = 406})
 local section9 = tab2:section({name = "Character",side = "right",size = 296})
 local section10 = tab2:section({name = "Shopping",side = "right",size = 226})
-local section11 = tab2:section({name = "Animating",side = "left",size = 185})
-local section12 = tab2:section({name = "Teleports",side = "left",size = 140})
+local section11 = tab2:section({name = "Animating",side = "left",size = 146})
+local section12 = tab2:section({name = "Teleports",side = "left",size = 145})
 
 
 local section13 = tab3:section({name = "Esp",side = "left",size = 125})
@@ -1221,14 +1224,14 @@ end})
 
 
 
-section8:dropdown({name = "Velocity Changers",def = "None",max = 4,options = {"None","Prediction Breaker","Swing","Underworld","Slingshot"},callback = function(State)
+section8:dropdown({name = "Velocity Changers",def = "None",max = 4,options = {"None","Prediction Breaker","Underworld","Insanity","Swing","Slingshot"},callback = function(State)
           if State == "None" then
 getgenv().antilock = false
   getgenv().AntiAim1 = false
   getgenv().AntiAim2 = false
           getgenv().loopzzs = false  
-          
-          wait(0.5)
+                        getgenv().insanityantiaim = false     
+          wait(0.1)
           
           game.Players.LocalPlayer.Character.Humanoid.HipHeight = 2
                  elseif State == "Prediction Breaker" then
@@ -1236,14 +1239,36 @@ getgenv().antilock = false
     getgenv().AntiAim1 = false
   getgenv().AntiAim2 = false
           getgenv().loopzzs = false  
-                 wait(0.5)
+                    getgenv().insanityantiaim = false 
+                 wait(0.1)
           game.Players.LocalPlayer.Character.Humanoid.HipHeight = 2
+                 elseif State == "Insanity" then
+          getgenv().insanityantiaim = true                   
+  getgenv().antilock = false
+    getgenv().AntiAim1 = false
+  getgenv().AntiAim2 = false
+          getgenv().loopzzs = false  
+                 wait(0.1)
+          game.Players.LocalPlayer.Character.Humanoid.HipHeight = 2
+          wait(0.01)
+          
+repeat
+    
+    wait(0.01)
+                
+ local Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+
+    task.wait()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = (CFrame.new(Position) + Vector3.new(math.random(getgenv().negativeamount, getgenv().positiveamount), math.random(getgenv().negativeamount, getgenv().positiveamount), math.random(getgenv().negativeamount, getgenv().positiveamount))) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)))
+until getgenv().insanityantiaim == false
+          
                  elseif State == "Swing" then
                 getgenv().loopzzs = false  
   getgenv().AntiAim1 = true
   getgenv().antilock = false
     getgenv().AntiAim2 = false
-           wait(0.5)
+                      getgenv().insanityantiaim = false 
+           wait(0.1)
             game.Players.LocalPlayer.Character.Humanoid.HipHeight = 2
     
         elseif State == "Underworld" then
@@ -1251,6 +1276,7 @@ getgenv().antilock = false
  getgenv().antilock = false
   getgenv().AntiAim1 = false
   getgenv().AntiAim2 = false
+                    getgenv().insanityantiaim = false 
             
             repeat
                 task.wait()
@@ -1265,7 +1291,8 @@ until getgenv().loopzzs == false
   getgenv().AntiAim1 = false
   getgenv().antilock = false
     getgenv().AntiAim2 = true
-       wait(0.5)
+                      getgenv().insanityantiaim = false 
+       wait(0.1)
         game.Players.LocalPlayer.Character.Humanoid.HipHeight = 2
 
         end
@@ -1278,6 +1305,19 @@ section8:slider({name = "Prediction Backtrack",def = 0.26, max = 1,min = 0,round
         getgenv().antilockspeed = e
 end})
 
+section8:slider({name = "Underworld Velocity",def = -50, max = 0,min = -500,rounding = false,ticking = false,measuring = "",callback = function(e)
+        getgenv().empzvelocity = e
+end})
+
+section8:slider({name = "Underworld Hip Height",def = 4, max = 10,min = 0,rounding = false,ticking = false,measuring = "",callback = function(e)
+        getgenv().hipzheight = e
+end})
+
+section8:slider({name = "Insanity Amount",def = 5, max = 10,min = 0,rounding = false,ticking = false,measuring = "",callback = function(e)
+        getgenv().positiveamount = e
+end})
+
+
 
 section8:slider({name = "Swing Amount",def = 260, max = 1000,min = 0,rounding = false,ticking = false,measuring = "",callback = function(e)
         getgenv().RotationSpeed = e
@@ -1285,14 +1325,6 @@ end})
 
 section8:slider({name = "Swing Angle",def = 260, max = 1000,min = 0,rounding = false,ticking = false,measuring = "",callback = function(e)
         getgenv().VectorSpeed = e
-end})
-
-section8:slider({name = "Underworld Velocity",def = -50, max = 0,min = -500,rounding = false,ticking = false,measuring = "",callback = function(e)
-        getgenv().empzvelocity = e
-end})
-
-section8:slider({name = "Underworld Hip Height",def = 4, max = 10,min = 0,rounding = false,ticking = false,measuring = "",callback = function(e)
-        getgenv().hipzheight = e
 end})
 
 section8:slider({name = "Slingshot Value",def = 1, max = 5,min = 0,rounding = false,ticking = false,measuring = "",callback = function(e)
@@ -2165,44 +2197,7 @@ end})
 
 
 
-section11:dropdown({name = "Idle",def = "",max = 10,options = {"Borock","Zombie","Werewolf","Ninja","Ud'zal","Mage","Toy"},callback = function(State)
-      if State == "Borock" then
-            game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId =
-                "http://www.roblox.com/asset/?id=3293641938"
-            game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId =
-                "http://www.roblox.com/asset/?id=3710131919"
-        elseif State == "Zombie" then
-            game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId =
-                "http://www.roblox.com/asset/?id=616158929"
-            game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId =
-                "http://www.roblox.com/asset/?id=616160636"
-        elseif State == "Werewolf" then
-            game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId =
-                "http://www.roblox.com/asset/?id=1083195517"
-            game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId =
-                "http://www.roblox.com/asset/?id=1083214717"
-        elseif State == "Ninja" then
-            game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId =
-                "http://www.roblox.com/asset/?id=656117400"
-            game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId =
-                "http://www.roblox.com/asset/?id=656118341"
-        elseif State == "Ud'zal" then
-            game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId =
-                "http://www.roblox.com/asset/?id=3303162274"
-            game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId =
-                "http://www.roblox.com/asset/?id=3303162274"
-        elseif State == "Mage" then
-            game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId =
-                "http://www.roblox.com/asset/?id=707742142"
-            game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId =
-                "http://www.roblox.com/asset/?id=707855907"
-        elseif State == "Toy" then
-            game.Players.LocalPlayer.Character.Animate.idle.Animation1.AnimationId =
-                "http://www.roblox.com/asset/?id=782841498"
-            game.Players.LocalPlayer.Character.Animate.idle.Animation2.AnimationId =
-                "http://www.roblox.com/asset/?id=782841498"
-        end
-end})
+
 
     
     section11:dropdown({name = "Run",def = "",max = 10,options = {"Zombie","Werewolf","Ninja","Mage","Toy"},callback = function(State)
