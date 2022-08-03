@@ -3750,7 +3750,7 @@ while wait(1) do
         if string.len(tostring(GetHours)) == 1 then HT = "0" .. GetHours else HT = GetHours end
         if string.len(tostring(GetMinutes)) == 1 then MT = "0" .. GetMinutes else MT = GetMinutes end
         if string.len(tostring(GetSeconds)) == 1 then ST = "0" .. GetSeconds else ST = GetSeconds end
-        Title.Text = "Reticle Private | Da Hood | " .. AbyssStorage.FPSBeat .. " fps | " .. tostring(math.floor(Stats:GetValue())) .. " ms | " .. HT .. ":" .. MT .. ":" .. ST
+        Title.Text = "Reticle | Da Hood | " .. AbyssStorage.FPSBeat .. " fps | " .. tostring(math.floor(Stats:GetValue())) .. " ms | " .. HT .. ":" .. MT .. ":" .. ST
         AbyssStorage.FPSBeat = 0
         Watermark.Visible = true
     else
